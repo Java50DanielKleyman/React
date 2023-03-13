@@ -14,12 +14,12 @@ export const Input: React.FC<Props> = ({ submitFn, placeHolder, buttonName }) =>
         inputElement.current = document.getElementById(id.current) as HTMLInputElement
     }, []);
     function inputProcess() {
-        let message = submitFn(inputElement.current!.value)
-        if (message) {
-            setMessage(message)
+        let message1 = submitFn(inputElement.current!.value)
+        if (message1) {
+            setMessage(message1)
         } else {
             inputElement.current!.value = '';
-            setMessage(message)
+            setMessage(message1)
         }
     }
 
