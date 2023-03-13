@@ -21,8 +21,7 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
     const [newCityCountry, setCityCountry] = useState(cityCountry)
     const [startIndex, setIndex] = useState(timeZones.findIndex(elm =>
         JSON.stringify(elm).includes(newCityCountry)));
-    const [message, setMessage] = useState<string>('')
-
+    
     useEffect(() => {
         const interval = setInterval(tic, 2000);
         console.log("useEffect");

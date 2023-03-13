@@ -15,6 +15,7 @@ export const Input: React.FC<Props> = ({ submitFn, placeHolder, buttonName }) =>
     }, []);
     function inputProcess() {
         let message1 = submitFn(inputElement.current!.value)
+        
         if (message1) {
             setMessage(message1)
         } else {
