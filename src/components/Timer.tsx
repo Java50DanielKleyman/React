@@ -17,10 +17,10 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
     };
 
     const [time, setTime] = useState<Date>(new Date());
-    let timeResult: string    
+    let timeResult: string
     const [newCityCountry, setCityCountry] = useState(cityCountry)
-    const [startIndex, setIndex] = useState(timeZones.findIndex( elm=>
-    JSON.stringify(elm).includes(newCityCountry)));
+    const [startIndex, setIndex] = useState(timeZones.findIndex(elm =>
+        JSON.stringify(elm).includes(newCityCountry)));
     const [message, setMessage] = useState<string>('')
 
     useEffect(() => {
@@ -30,8 +30,7 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
     }, [])
 
     if (startIndex < 0) {
-        timeResult = time.toLocaleTimeString();
-        //setMessage("Wrong city/country")
+        timeResult = time.toLocaleTimeString();        
     } else {
         timeResult = time.toLocaleTimeString(undefined,
             { timeZone: timeZones[startIndex].name })
@@ -39,20 +38,22 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
     function tic() {
         setTime(new Date());
     }
-    function submit(value: string) : string{
+    function submit(value: string): string {
         let res: string = ''
-        setCityCountry(value)
-        setIndex(timeZones.findIndex( elm=>
-            JSON.stringify(elm).includes(value)))          
-            if(timeZones.findIndex( elm=>
-                JSON.stringify(elm).includes(value)) < 0){
-                res = "Wrong city or country"}
-                    return res;
+        let index: number = timeZones.findIndex(elm =>
+            JSON.stringify(elm).includes(value));
+        if (index < 0) {
+            res = "Wrong city or country, please try again or check first letter - it must be capital"
+        } else {
+            setCityCountry(value)
+            setIndex(index)
+        }
+        return res;
     }
-    
+
     return <div>
-        <Input submitFn={submit} placeHolder={"enter any text"} buttonName="enter"/>
-       <h2 style={stylesH2}>Current Time in {newCityCountry}</h2>
+        <Input submitFn={submit} placeHolder={"enter any text"} buttonName="enter" />
+        <h2 style={stylesH2}>Current Time in {newCityCountry}</h2>
         <p style={styles}>{timeResult}</p>
     </div>
 }
