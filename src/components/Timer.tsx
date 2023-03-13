@@ -42,7 +42,7 @@ export const Timer: React.FC<Props> = ({ cityCountry }) => {
         let res: string = ''
         let index: number = timeZones.findIndex(elm =>
             JSON.stringify(elm).includes(value));
-        if (index < 0) {
+        if (index < 0 || value.length == 0) {
             res = "Wrong city or country, please try again or check first letter - it must be capital"
         } else {
             setCityCountry(value)
