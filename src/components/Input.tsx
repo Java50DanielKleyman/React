@@ -11,10 +11,10 @@ export const Input: React.FC<Props> = ({submitFn, placeHolder, buttonName}) => {
     
     function inputProcess() {
         const tempMessage = submitFn(inputElement.current!.value);
-        if(!tempMessage){
-            inputElement.current!.value=''
-        }
-       setMessage(tempMessage);
+    //     if(!tempMessage){
+    //         inputElement.current!.value=''
+    //     }
+    //    setMessage(tempMessage);
     }
     return <div>
         <input type="text" placeholder={placeHolder} ref={inputElement}/>
