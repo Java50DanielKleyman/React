@@ -14,7 +14,7 @@ export const StateMachine: React.FC = () => {
     {authUser.length>0 && !authUser.includes('admin') && 
     (<><CounterUpdater operand={2}/><CounterSquare/><Logout/></>)}
     {authUser.length>0 && authUser.includes('admin') && 
-    (<><CounterUpdater operand={2}/><CounterMultiply factor={2}/><CounterSquare/><Logout/></>)}
+    (<><CounterUpdater operand={2} reset={true}/><CounterMultiply factor={2}/><CounterSquare/><Logout/></>)}
      </>
     
     

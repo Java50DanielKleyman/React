@@ -12,13 +12,7 @@ import {StateMachine} from './components/StateMachine';
 function App() {
   
   return <div style={{display: 'flex', alignItems: 'center',
-   flexDirection: 'column'}}>
-
-    {/* <Login/>
-    <CounterUpdater operand={2}/>
-    <CounterMultiply factor={3}/>
-    <CounterSquare/>
-    <Logout/> */}
+   flexDirection: 'column', marginTop: '15vh'}}>    
     <StateMachine/>
   </div>
 }
