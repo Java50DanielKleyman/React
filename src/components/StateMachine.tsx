@@ -6,12 +6,16 @@ import { CounterMultiply } from "./CounterMultiply";
 import { CounterSquare } from "./CounterSquare";
 import { useSelector } from "react-redux";
 
-export const StateMachine: React.FC = () => {
-    let htmlText: string = '';
+export const StateMachine: React.FC = () => {   
     const authUser = useSelector<any, string>(state=>state.auth.authUser)
-    if(authUser!){
-        htmlText='<Login/>'
-    }
-
-    return <Login/>
+    
+   return <>
+    {!authUser && <Login/>}
+    {authUser.length>0 && !authUser.includes('admin') && 
+    (<><CounterUpdater operand={2}/><CounterSquare/><Logout/></>)}
+    {authUser.length>0 && authUser.includes('admin') && 
+    (<><CounterUpdater operand={2}/><CounterMultiply factor={2}/><CounterSquare/><Logout/></>)}
+     </>
+    
+    
 }
