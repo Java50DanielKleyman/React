@@ -1,12 +1,7 @@
 import React from 'react';
 
 import './App.css';
-import { CounterMultiply } from './components/CounterMultiply';
-import { CounterSquare } from './components/CounterSquare';
-import { CounterUpdater } from './components/CounterUpdater';
-import { Timer } from './components/Timer';
-import {Login} from './components/Login';
-import {Logout} from './components/Logout';
+
 import {StateMachine} from './components/StateMachine';
 
 function App() {
