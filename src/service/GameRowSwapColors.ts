@@ -24,8 +24,14 @@ export default class GameRowSwapColors extends GameRowSimpleColors {
         } else {
             res = JSON.parse(JSON.stringify(this.row));
             const resAr = res as CellType[]
-            for (let i = this.firstIndex; i <= id; i++) {
-                resAr[i].cellColor = "black"
+            if (this.firstIndex <= id) {
+                for (let i = this.firstIndex; i <= id; i++) {
+                    resAr[i].cellColor = "black"
+                }
+            } else {
+                for (let i = id; i <= this.firstIndex; i++) {
+                    resAr[i].cellColor = "black"
+                }
             }
             this.row = resAr;
             this.firstIndex = -1;
@@ -35,5 +41,9 @@ export default class GameRowSwapColors extends GameRowSimpleColors {
     }
     isOver(): boolean {
         return this.count === Math.floor(this.nCells / 2);
+    }
+    swapFn(id: number): void {
+
+
     }
 }
