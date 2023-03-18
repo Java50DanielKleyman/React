@@ -20,8 +20,7 @@ export default class GameRowSimpleColors implements GameRow {
         let res: string | CellType[]
         if (this.isOver()) {
             res = "game is over"
-        } else{
-           
+        } else{           
             res = JSON.parse(JSON.stringify(this.row));
             const resAr = res as CellType[]
             resAr[id].cellColor = "black"
