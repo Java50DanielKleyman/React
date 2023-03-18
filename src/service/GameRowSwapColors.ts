@@ -42,8 +42,4 @@ export default class GameRowSwapColors extends GameRowSimpleColors {
     isOver(): boolean {
         return this.count === Math.floor(this.nCells / 2);
     }
-    swapFn(id: number): void {
-
-
-    }
 }
