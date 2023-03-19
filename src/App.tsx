@@ -21,7 +21,8 @@ function App() {
         dispatch(gameActions.move(id))
       }} />)
   }
-  return <><div style={{ display: 'flex' }}>
+  return <><div style={{ display: 'flex', marginTop: '5vh', 
+  justifyContent: 'center'}}>
     {getRow()}
   </div>
     {(typeof cells == "string") && <div style={{ marginTop: '5vh', textAlign: 'center' }}>
