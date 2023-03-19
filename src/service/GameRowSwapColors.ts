@@ -1,19 +1,28 @@
 import GameRowSimpleColors from "./GameRowSimpleColors";
 import { CellType } from "../model/CellType";
+import { getColors } from "../util/colors";
+import { getRandomElement } from "../util/random";
 
 export default class GameRowSwapColors extends GameRowSimpleColors {
     count: number;
     nCells: number;
     firstIndex: number;
-
-
+    
     constructor(nCells: number) {
         super(nCells)
         this.nCells = nCells;
         this.count = 0;
         this.firstIndex = -1;
-    }
-
+           }
+getInitialRow(): CellType[] {
+    this.count = 0;
+    this.firstIndex = -1;
+    return this.row = Array.from({ length: this.nCells })
+    .map((__, index) => ({
+        cellColor: getRandomElement(getColors()) as string,
+        borderColor: "black", cellContent: '', id: index
+    }))
+}
     move(id: number): string | CellType[] {
         let res: string | CellType[]
         if (this.isOver()) {
