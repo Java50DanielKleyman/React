@@ -22,22 +22,38 @@ export default class GameRowSwapColors extends GameRowSimpleColors {
             this.firstIndex = id;
             res = JSON.parse(JSON.stringify(this.row));
         } else {
-            res = JSON.parse(JSON.stringify(this.row));
-            const resAr = res as CellType[]
-            if (this.firstIndex <= id) {
-                for (let i = this.firstIndex; i <= id; i++) {
-                    resAr[i].cellColor = "black"
-                }
-            } else {
-                for (let i = id; i <= this.firstIndex; i++) {
-                    resAr[i].cellColor = "black"
-                }
-            }
-            this.row = resAr;
-            this.firstIndex = -1;
+            res = this.swabFn(id)
         }
         this.count++;
         return res;
+    }
+    swabFn(id: number): string | CellType[] {
+        let res: string | CellType[];
+        res = JSON.parse(JSON.stringify(this.row));
+        let resAr = res as CellType[]
+        if (this.firstIndex <= id) {
+            resAr = this.swabFnPlus(resAr, id);
+        }
+        else {
+            resAr = this.swabFnMinus(resAr, id);
+        }
+        this.row = resAr;
+        this.firstIndex = -1;
+        return res;
+    }
+    swabFnPlus(arr: CellType[], id: number): CellType[] {
+        const resAr = arr
+        for (let i = this.firstIndex; i <= id; i++) {
+            resAr[i].cellColor = "black"
+        }
+        return resAr;
+    }
+    swabFnMinus(arr: CellType[], id: number): CellType[] {
+        const resAr = arr;
+        for (let i = id; i <= this.firstIndex; i++) {
+            resAr[i].cellColor = "black"
+        }
+        return resAr;
     }
     isOver(): boolean {
         return this.count === Math.floor(this.nCells / 2);
