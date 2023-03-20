@@ -7,15 +7,22 @@ import { CellType } from './model/CellType';
 import { gameActions } from './redux/gameSlice';
 import { ResetButton } from './components/ResetButton';
 import { StartButton } from './components/StartButton';
+import { StopGame } from './components/StopGame';
 
 function App() {
   const cells = useSelector<any, CellType[] | string>(state => state.gameRow.cells)
   const dispatch = useDispatch();
   const [isStart, setIsStart] = useState(false);
-
-  function handlerFn(): boolean {
+  const [isStop, setIsStop] = useState(false);
+  function startGame(): boolean {
     setIsStart(true);
+    setIsStop(true)
     return true;
+  }
+  function stopGame(): boolean {
+    setIsStart(false);
+    setIsStop(false)
+    return false;
   }
   function getRow(): ReactNode {
     if (typeof cells == "string") {
@@ -28,13 +35,16 @@ function App() {
   }
   return <>
     {!isStart && <div style={{ marginTop: '5vh', textAlign: 'center' }}>
-      <StartButton onClick={handlerFn} />
+      <StartButton onClick={startGame} />
     </div>}
     {isStart && <div style={{ display: 'flex', marginTop: '5vh', justifyContent: 'center' }}>
       {getRow()}
     </div>}
-    {(typeof cells == "string") && <div style={{ marginTop: '5vh', textAlign: 'center' }}>
-      <ResetButton /></div>}</>
+    {isStop && <div style={{ marginTop: '5vh', textAlign: 'center' }}>
+      <ResetButton /></div>}
+    {isStop && <div style={{ marginTop: '5vh', textAlign: 'center' }}>
+      <StopGame onClick={stopGame} /></div>}
+  </>
 
 
 
