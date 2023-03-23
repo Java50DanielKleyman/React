@@ -8,7 +8,7 @@ export const Matrix: React.FC<Props> = ({matrix}) => {
     function getRows(): ReactNode {
         return matrix.map((row, index) => <Row row={row} key={index}></Row>)
     }
-    return <div style={{display: 'flex', flexDirection: 'column'}}>
+    return <div style={{display: 'flex', flexDirection: 'column', marginTop: "4vh"}}>
         {getRows()}
     </div>
 }
