@@ -1,6 +1,3 @@
-import { checkPrimeSync } from "crypto";
-
-
 export default class LifeMatrix {
     constructor(private _numbers: number[][]) { }
     get numbers() {
@@ -18,20 +15,12 @@ export default class LifeMatrix {
             }
             );
         });
-
     }
-    checkFn(check: number, value: number): number {
-        const checkValue: number = value;
-        const checkRes: number = check;
-        if (checkValue === 1 && checkRes < 2) {
-            return 0;
-        } else if (checkValue === 1 && (2 <= checkRes && checkRes <= 3)) {
-            return 1;
-        } else if (checkValue === 1 && checkRes > 3) {
-            return 0;
-        } else if (checkValue === 0 && checkRes === 3) {
-            return 1;
-        }
-        return checkValue;
+    checkFn(check: number, value: number){
+        const checkValue = value;
+        const checkRes = check;       
+        return checkValue === 1
+        ? (checkRes < 2 || checkRes > 3 ? 0 : 1)
+        : (checkRes === 3 ? 1 : checkValue);;
     }
 }
