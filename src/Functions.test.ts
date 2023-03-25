@@ -14,7 +14,7 @@ test("test matrix size", () => {
     const matrixSize: number[][] = lifeMatrix.nextStep()
     expect(matrixSize.length).toEqual(6)
 })
-test("test matrix part size", () => {
+test("test matrix part", () => {
     const lifeMatrix = new LifeMatrix([
         [1, 0, 0, 0, 0, 0],
         [0, 0, 0, 1, 0, 0],
