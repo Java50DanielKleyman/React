@@ -7,7 +7,7 @@ type Props = {
 export const Row: React.FC<Props> = ({row}) => {
     const {dimensions} = lifeGameConfig;
     function getSize() :number {
-        return Math.min(window.innerWidth, window.innerHeight) / dimensions - 18 
+        return Math.min(window.innerWidth, window.innerHeight) / dimensions - 2
     }
     function getStyle(cellValue: number): CSSProperties {
         const size = getSize();
