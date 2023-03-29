@@ -1,9 +1,12 @@
 {
-    "/": "Home",
-    "/orders": "Orders",
-    "/customers": "Customers",
-    "/shoppingcart": "ShoppingCart",
-    "/Products": {
+    "allitems": {
+        "/": "Home",
+        "/orders": "Orders",
+        "/customers": "Customers",
+        "/shoppingcart": "ShoppingCart",
+        "/products": "Products"
+    },
+    "products": {
         "/products/dairy": "Dairy Products",
         "/products/bread": "Bread Products"
     }
