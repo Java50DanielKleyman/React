@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
 import './navigators.css'
+import navigationConfig from '../../config/navigationConfig.json'
 
 export const Layout: React.FC = () => {
-     const navigate = useNavigate(); 
-  
-  useEffect(() => {
-   navigate('/');
-  }, []);
+    const navigate = useNavigate();
+    useEffect(() => {
+        navigate('/');
+    }, []);
     return <div>
         <nav>
             <ul className="navigator-list">

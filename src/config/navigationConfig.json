@@ -1,0 +1,10 @@
+{
+    "/": "Home",
+    "/orders": "Orders",
+    "/customers": "Customers",
+    "/shoppingcart": "ShoppingCart",
+    "/Products": {
+        "/products/dairy": "Dairy Products",
+        "/products/bread": "Bread Products"
+    }
+}
