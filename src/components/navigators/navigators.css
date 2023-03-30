@@ -10,7 +10,7 @@
 }
 .navigator-item {
     margin-left: 4vw;
-    font-size: 1em;
+    font-size: 1em;   
    }
    .active {
     background-color: blue;

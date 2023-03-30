@@ -9,13 +9,10 @@ export const Layout: React.FC = () => {
     useEffect(() => {
         navigate('/');
     }, []);
-    const allItems = navigationConfig["allitems"];
-    return <div>
-        <nav>
-            <ul className="navigator-list">
-                <Navigator navigatorItems={allItems} />
-            </ul>
-        </nav>
+    const allItems = [navigationConfig["allitems"],
+    { className: "navigator-list" }]
+    return <div>        
+            <Navigator navigatorItems={allItems} />        
         <Outlet />
     </div>
 }
