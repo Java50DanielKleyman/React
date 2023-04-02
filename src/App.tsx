@@ -34,7 +34,7 @@ function App() {
           } else if (authUser.includes('admin')) {
                updatedRoutes = routes.filter(route => route.always || route.authenticated && route.admin)
           } else {
-               updatedRoutes = routes.filter(route =>  route.always || route.authenticated && !route.admin)
+               updatedRoutes = routes.filter(route =>  route.always || route.authenticated)
           }
           return updatedRoutes;
      }
