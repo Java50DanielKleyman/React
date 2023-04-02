@@ -14,9 +14,12 @@ import { routes } from './config/layout-config'
 import { Navigator } from './components/navigators/Navigator';
 import { routesProduct } from './config/products-config';
 import { NavigatorDesktop } from './components/navigators/NavigatorDesktop';
+import { useSelector } from 'react-redux';
+import { Login } from './components/pages/Login';
+import { Logout } from './components/pages/Logout';
 
 function App() {
-
+     const authUser = useSelector<any, string>(state=>state.auth.authUser)
      return <BrowserRouter>
           <Routes>
                <Route path='/' element={<NavigatorDesktop routes={routes} />}>
@@ -24,10 +27,11 @@ function App() {
                     <Route path='customers' element={<Customers />} />
                     <Route path='orders' element={<Orders />} />
                     <Route path='shoppingcart' element={<ShoppingCart />} />
+                    <Route path='login' element={<Login />} />
+                    <Route path='logout' element={<Logout />} />
                     <Route path='products' element={<Navigator subnav routes={routesProduct} />}>
                          <Route path='dairy' element={<Dairy />} />
-                         <Route path='bread' element={<Bread />} />
-                        
+                         <Route path='bread' element={<Bread />} />                     
 
                     </Route>
                </Route>
