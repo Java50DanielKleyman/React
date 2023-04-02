@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.css';
@@ -17,12 +17,30 @@ import { NavigatorDesktop } from './components/navigators/NavigatorDesktop';
 import { useSelector } from 'react-redux';
 import { Login } from './components/pages/Login';
 import { Logout } from './components/pages/Logout';
+import { Type } from 'typescript';
+import { RouteType } from './model/RouteType';
 
 function App() {
-     const authUser = useSelector<any, string>(state=>state.auth.authUser)
+     const authUser = useSelector<any, string>(state => state.auth.authUser)
+     // const newRoutes: RouteType[] = [];
+     const [newRoutes, getNewRoutes] = useState(routes);
+     useEffect(() => {
+          getNewRoutes(getRoutes)
+     }, [authUser]);
+     function getRoutes(): RouteType[] {
+          let updatedRoutes: RouteType[] = [];
+          if (!authUser) {
+               updatedRoutes = routes.filter(route => route.no_authenticated || route.always)
+          } else if (authUser.includes('admin')) {
+               updatedRoutes = routes.filter(route => route.always || route.authenticated && route.admin)
+          } else {
+               updatedRoutes = routes.filter(route =>  route.always || route.authenticated && !route.admin)
+          }
+          return updatedRoutes;
+     }
      return <BrowserRouter>
           <Routes>
-               <Route path='/' element={<NavigatorDesktop routes={routes} />}>
+               <Route path='/' element={<NavigatorDesktop routes={newRoutes} />}>
                     <Route index element={<Home />} />
                     <Route path='customers' element={<Customers />} />
                     <Route path='orders' element={<Orders />} />
@@ -31,7 +49,7 @@ function App() {
                     <Route path='logout' element={<Logout />} />
                     <Route path='products' element={<Navigator subnav routes={routesProduct} />}>
                          <Route path='dairy' element={<Dairy />} />
-                         <Route path='bread' element={<Bread />} />                     
+                         <Route path='bread' element={<Bread />} />
 
                     </Route>
                </Route>
