@@ -22,7 +22,6 @@ import { RouteType } from './model/RouteType';
 
 function App() {
      const authUser = useSelector<any, string>(state => state.auth.authUser)
-     // const newRoutes: RouteType[] = [];
      const [newRoutes, getNewRoutes] = useState(routes);
      useEffect(() => {
           getNewRoutes(getRoutes)
@@ -32,10 +31,10 @@ function App() {
           routes[6].label = authUser;
           if (!authUser) {
                updatedRoutes = routes.filter(route => route.no_authenticated || route.always)
-          } else if (authUser.includes('admin')) {               
+          } else if (authUser.includes('admin')) {
                updatedRoutes = routes.filter(route => route.always || route.admin)
           } else {
-               updatedRoutes = routes.filter(route =>  route.always || route.authenticated)
+               updatedRoutes = routes.filter(route => route.always || route.authenticated)
           }
           return updatedRoutes;
      }
