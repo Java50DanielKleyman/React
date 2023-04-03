@@ -29,9 +29,10 @@ function App() {
      }, [authUser]);
      function getRoutes(): RouteType[] {
           let updatedRoutes: RouteType[] = [];
+          routes[6].label = authUser;
           if (!authUser) {
                updatedRoutes = routes.filter(route => route.no_authenticated || route.always)
-          } else if (authUser.includes('admin')) {
+          } else if (authUser.includes('admin')) {               
                updatedRoutes = routes.filter(route => route.always || route.admin)
           } else {
                updatedRoutes = routes.filter(route =>  route.always || route.authenticated)
