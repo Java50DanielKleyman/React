@@ -36,7 +36,7 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export default function SignIn(props: Props) {
+export function SignIn(props: Props) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -49,7 +49,7 @@ export default function SignIn(props: Props) {
       password: data.get('password'),
     });
   };
-
+export function 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -118,6 +118,7 @@ export default function SignIn(props: Props) {
     justifyContent: 'center',
     alignItems: 'center',
   }}
+  onClick={HandlerGoogleFn}
 >
   <img
     src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png"
@@ -125,8 +126,6 @@ export default function SignIn(props: Props) {
     style={{ height: '80%', margin: '0 auto' }}
   />
 </Button>
-
-
             </Box>
             <Grid container>
               <Grid item xs>
