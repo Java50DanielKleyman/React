@@ -13,14 +13,15 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LoginData } from '../../model/LoginData';
-import GoogleIcon from '@mui/icons-material/Google';
-import SvgIcon from '@mui/icons-material/LockOutlined';
 import { authService } from '../../config/auth-service-config';
+import { Alert } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { codeActions } from '../../redux/codeSlice';
 
 type Props = {
   submitFn:
-  (loginData: LoginData, 
-    isGoogleSignIn?: boolean ) => void
+  (loginData: LoginData,
+    isGoogleSignIn?: boolean) => void
 }
 
 function Copyright(props: any) {
@@ -45,14 +46,16 @@ export default function SignIn(props: Props) {
     const email = data.get('email') as string;
     const password = data.get('password') as string;
     const loginData: LoginData = { email, password };
-    props.submitFn(loginData);    
+    props.submitFn(loginData);
   };
   const handleGoogleClick = async () => {
-    const email = await authService.signInGoogle(); 
+    const email = await authService.signInGoogle();
     const password = '';
-    const loginData: LoginData = { email, password};
+    const loginData: LoginData = { email, password };
     props.submitFn(loginData, true);
   };
+  const code = useSelector<any, string>(state => state.codeState.code);
+  const dispatch = useDispatch();
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -105,31 +108,32 @@ export default function SignIn(props: Props) {
               >
                 Sign In
               </Button>
-              
+              {code == "Wrong Credentials" && <Alert onClose={() => { dispatch(codeActions.set("OK")) }}
+              style={{ backgroundColor: 'red' }}>Error: wrong credentials, sign in again</Alert>}
               <Typography variant="h6" sx={{ my: 2, fontSize: '1.5 rem' }}>or</Typography>
               <Button
-  type="submit"
-  fullWidth
-  variant="contained"
-  sx={{
-    mt: 2,
-    bgcolor: 'white',
-    height: '48px',
-    '&:hover': {
-      bgcolor: 'white',
-    },
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }}
-  onClick={handleGoogleClick}
->
-  <img
-    src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png"
-    alt="Google Icon"
-    style={{ height: '80%', margin: '0 auto' }}
-  />
-</Button>
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{
+                  mt: 2,
+                  bgcolor: 'white',
+                  height: '48px',
+                  '&:hover': {
+                    bgcolor: 'white',
+                  },
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                onClick={handleGoogleClick}
+              >
+                <img
+                  src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png"
+                  alt="Google Icon"
+                  style={{ height: '80%', margin: '0 auto' }}
+                />
+              </Button>
             </Box>
             <Grid container>
               <Grid item xs>
