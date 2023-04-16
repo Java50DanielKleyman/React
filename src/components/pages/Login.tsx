@@ -7,16 +7,16 @@ import LoginForm from "../forms/LoginForm"
 
 export const Login: React.FC = () => {
     const dispatch = useDispatch();
-    async function loginFn(loginData: LoginData) {
+    async function loginFn(loginData: LoginData, isGoogleSignIn?: boolean) {
         try {
-            const email: string = await authService.login(loginData);
+            const email = await authService.login(loginData, isGoogleSignIn);            
             localStorage.setItem(AUTH_USER_ITEM, email);
             dispatch(authAction.login(email));
             dispatch(codeActions.set("OK"))
         } catch (error) {
             dispatch(codeActions.set("Wrong Credentials"))
         }
-       
+
     }
     return <LoginForm submitFn={loginFn} />
 }

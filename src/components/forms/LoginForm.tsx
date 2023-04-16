@@ -15,10 +15,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LoginData } from '../../model/LoginData';
 import GoogleIcon from '@mui/icons-material/Google';
 import SvgIcon from '@mui/icons-material/LockOutlined';
+import { authService } from '../../config/auth-service-config';
 
 type Props = {
   submitFn:
-  (loginData: LoginData) => void
+  (loginData: LoginData, 
+    isGoogleSignIn?: boolean ) => void
 }
 
 function Copyright(props: any) {
@@ -36,20 +38,21 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export function SignIn(props: Props) {
+export default function SignIn(props: Props) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get('email') as string;
     const password = data.get('password') as string;
     const loginData: LoginData = { email, password };
-    props.submitFn(loginData);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    props.submitFn(loginData);    
   };
-export function 
+  const handleGoogleClick = async () => {
+    const email = await authService.signInGoogle(); 
+    const password = '';
+    const loginData: LoginData = { email, password};
+    props.submitFn(loginData, true);
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -102,6 +105,7 @@ export function
               >
                 Sign In
               </Button>
+              
               <Typography variant="h6" sx={{ my: 2, fontSize: '1.5 rem' }}>or</Typography>
               <Button
   type="submit"
@@ -118,7 +122,7 @@ export function
     justifyContent: 'center',
     alignItems: 'center',
   }}
-  onClick={HandlerGoogleFn}
+  onClick={handleGoogleClick}
 >
   <img
     src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png"
