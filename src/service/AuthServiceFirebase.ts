@@ -5,13 +5,13 @@ import { getAuth, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAu
 export default class AuthServiceFirebase implements AuthService {
     auth = getAuth(firebaseApp);
     async login(loginData: LoginData, isGoogleSignIn?: boolean): Promise<string> {
-        return isGoogleSignIn ? loginData.email : this.signPassword(loginData);
+        return isGoogleSignIn ? this.signInGoogle() : this.signPassword(loginData);
     }
     private async signPassword(loginData: LoginData): Promise<string> {
         await signInWithEmailAndPassword(this.auth, loginData.email, loginData.password)
         return loginData.email;
     }
-     async signInGoogle(): Promise<string> {
+    private async signInGoogle(): Promise<string> {
         const credential = await signInWithPopup(this.auth, new GoogleAuthProvider());
         return credential.user.email as string;
     }

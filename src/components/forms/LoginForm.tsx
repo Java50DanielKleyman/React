@@ -13,7 +13,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LoginData } from '../../model/LoginData';
-import { authService } from '../../config/auth-service-config';
 import { Alert } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { codeActions } from '../../redux/codeSlice';
@@ -44,15 +43,13 @@ export default function SignIn(props: Props) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get('email') as string;
-    const password = data.get('password') as string;
-    const loginData: LoginData = { email, password };
-    props.submitFn(loginData);
+    const password = data.get('password') as string;   
+    props.submitFn({ email, password });
   };
-  const handleGoogleClick = async () => {
-    const email = await authService.signInGoogle();
-    const password = '';
-    const loginData: LoginData = { email, password };
-    props.submitFn(loginData, true);
+  const handleGoogleClick = () => {
+    const email = '';
+    const password = '';    
+    props.submitFn({ email, password }, true);
   };
   const code = useSelector<any, string>(state => state.codeState.code);
   const dispatch = useDispatch();
@@ -108,8 +105,8 @@ export default function SignIn(props: Props) {
               >
                 Sign In
               </Button>
-              {code == "Wrong Credentials" && <Alert onClose={() => { dispatch(codeActions.set("OK")) }}
-              style={{ backgroundColor: 'red' }}>Error: wrong credentials, sign in again</Alert>}
+              {code === "Wrong Credentials" && <Alert onClose={() => { dispatch(codeActions.set("OK")) }}
+                style={{ backgroundColor: 'red' }}>Error: wrong credentials, sign in again</Alert>}
               <Typography variant="h6" sx={{ my: 2, fontSize: '1.5 rem' }}>or</Typography>
               <Button
                 type="submit"
