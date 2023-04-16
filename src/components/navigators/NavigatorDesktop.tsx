@@ -14,19 +14,18 @@ export const NavigatorDesktop: React.FC<Props> = ({subnav, routes}) => {
             navigate(routes[0].path)
             setValue(0)
         }
-         }, [routes])
+         },[routes])
     const handleChange = (event: any, newValue: number) => {
       setValue(newValue);
     };
   function getTabs(): ReactNode {
     return routes.map((route, index) => <Tab key={index} component={Link}
-     to={route.path} label={route.label}/>
-    
+     to={route.path} label={route.label}/>    
     )
   }
- return <Box sx={{marginTop: "10vh", display: 'flex',justifyContent: 'center'}}>
-    <AppBar sx={{backgroundColor: "lightgray", display: 'flex',alignItems: 'center'}}>
-        <Tabs value={value} onChange={handleChange}>
+ return <Box sx={{marginTop: "10vh"}}>
+    <AppBar sx={{backgroundColor: "lightgray"}}>
+        <Tabs value={value > routes.length? 0 : value} onChange={handleChange}>
             {getTabs()}
         </Tabs>
     </AppBar>

@@ -15,43 +15,46 @@ import { Navigator } from './components/navigators/Navigator';
 import { routesProduct } from './config/products-config';
 import { NavigatorDesktop } from './components/navigators/NavigatorDesktop';
 import { useSelector } from 'react-redux';
+import { RouteType } from './model/RouteType';
 import { Login } from './components/pages/Login';
 import { Logout } from './components/pages/Logout';
-import { Type } from 'typescript';
-import { RouteType } from './model/RouteType';
 
 function App() {
-     const authUser = useSelector<any, string>(state => state.auth.authUser)
-     const [newRoutes, getNewRoutes] = useState(routes);
-     useEffect(() => {
-          getNewRoutes(getRoutes)
-     }, [authUser]);
-     function getRoutes(): RouteType[] {
-          let updatedRoutes: RouteType[] = [];
-          routes[6].label = authUser;
-          if (!authUser) {
-               updatedRoutes = routes.filter(route => route.no_authenticated || route.always)
-          } else if (authUser.includes('admin')) {
-               updatedRoutes = routes.filter(route => route.always || route.admin)
-          } else {
-               updatedRoutes = routes.filter(route => route.always || route.authenticated)
-          }
-          return updatedRoutes;
+     const authUser = useSelector<any, string>(state=>state.auth.authUser);
+const [routesState, setRoutes] = useState(getRoutes());
+
+function getRoutes(): RouteType[] {
+     const routesRes = routes.filter(routePredicate);
+     const logoutRoute = routes.find(route => route.path === '/logout');
+     if (logoutRoute) {
+          logoutRoute.label = authUser;
      }
+     return routesRes;
+}
+function routePredicate(route: RouteType): boolean | undefined {
+     return route.always ||( route.authenticated && !!authUser )
+      || (route.admin && authUser.includes('admin')) ||
+       (route.no_authenticated && !authUser)  
+}
+useEffect(() => {
+     setRoutes(getRoutes());
+}, [authUser])
      return <BrowserRouter>
           <Routes>
-               <Route path='/' element={<NavigatorDesktop routes={newRoutes} />}>
+               <Route path='/' element={<NavigatorDesktop routes={routesState} />}>
                     <Route index element={<Home />} />
                     <Route path='customers' element={<Customers />} />
                     <Route path='orders' element={<Orders />} />
                     <Route path='shoppingcart' element={<ShoppingCart />} />
-                    <Route path='login' element={<Login />} />
-                    <Route path='logout' element={<Logout />} />
                     <Route path='products' element={<Navigator subnav routes={routesProduct} />}>
                          <Route path='dairy' element={<Dairy />} />
                          <Route path='bread' element={<Bread />} />
+                        
 
                     </Route>
+                    <Route path='login' element={<Login></Login>}/>
+                    <Route path='logout' element={<Logout></Logout>}/>
+                    <Route path='/*' element={<NotFound/>}/>
                </Route>
 
 

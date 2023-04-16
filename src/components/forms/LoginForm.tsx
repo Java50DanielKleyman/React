@@ -13,9 +13,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LoginData } from '../../model/LoginData';
-type Props = {submitFn:
-    (loginData: LoginData) => void }
-    
+import GoogleIcon from '@mui/icons-material/Google';
+import SvgIcon from '@mui/icons-material/LockOutlined';
+
+type Props = {
+  submitFn:
+  (loginData: LoginData) => void
+}
+
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -31,7 +36,7 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export default function SignIn(props: Props) {   
+export default function SignIn(props: Props) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -42,9 +47,9 @@ export default function SignIn(props: Props) {
     console.log({
       email: data.get('email'),
       password: data.get('password'),
-    });    
+    });
   };
-  
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -88,14 +93,41 @@ export default function SignIn(props: Props) {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
+            <Box display="flex" flexDirection="column" alignItems="center" sx={{ mt: 3 }}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mb: 2 }}
+              >
+                Sign In
+              </Button>
+              <Typography variant="h6" sx={{ my: 2, fontSize: '1.5 rem' }}>or</Typography>
+              <Button
+  type="submit"
+  fullWidth
+  variant="contained"
+  sx={{
+    mt: 2,
+    bgcolor: 'white',
+    height: '48px',
+    '&:hover': {
+      bgcolor: 'white',
+    },
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }}
+>
+  <img
+    src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png"
+    alt="Google Icon"
+    style={{ height: '80%', margin: '0 auto' }}
+  />
+</Button>
+
+
+            </Box>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
