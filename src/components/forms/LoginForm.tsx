@@ -16,6 +16,7 @@ import { LoginData } from '../../model/LoginData';
 import { Alert } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { codeActions } from '../../redux/codeSlice';
+import { FaExclamationCircle } from 'react-icons/fa';
 
 type Props = {
   submitFn:
@@ -43,12 +44,12 @@ export default function SignIn(props: Props) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get('email') as string;
-    const password = data.get('password') as string;   
+    const password = data.get('password') as string;
     props.submitFn({ email, password });
   };
   const handleGoogleClick = () => {
     const email = '';
-    const password = '';    
+    const password = '';
     props.submitFn({ email, password }, true);
   };
   const code = useSelector<any, string>(state => state.codeState.code);
@@ -106,7 +107,10 @@ export default function SignIn(props: Props) {
                 Sign In
               </Button>
               {code === "Wrong Credentials" && <Alert onClose={() => { dispatch(codeActions.set("OK")) }}
-                style={{ backgroundColor: 'red' }}>Error: wrong credentials, sign in again</Alert>}
+                style={{ backgroundColor: 'LavenderBlush' }}
+                icon={<FaExclamationCircle color="red" />}>
+                Error: Wrong credentials, sign in again
+              </Alert>}
               <Typography variant="h6" sx={{ my: 2, fontSize: '1.5 rem' }}>or</Typography>
               <Button
                 type="submit"
