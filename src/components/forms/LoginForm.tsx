@@ -111,7 +111,25 @@ export default function SignIn(props: Props) {
                 icon={<FaExclamationCircle color="red" />}>
                 Error: Wrong credentials, sign in again
               </Alert>}
-              <Typography variant="h6" sx={{ my: 2, fontSize: '1.5 rem' }}>or</Typography>
+              <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                textAlign: 'center',
+                width: '100%',
+                marginTop: '1rem',
+                marginBottom: '1rem',
+                lineHeight: 0,
+              }}>
+                <Box sx={{
+                  flex: '1 1 0',
+                  borderBottom: '1px solid gray'
+                }} />
+                <Box sx={{ paddingX: '0.5rem', fontSize: '1rem', fontWeight: 'bold' }}>or</Box>
+                <Box sx={{
+                  flex: '1 1 0',
+                  borderBottom: '1px solid gray'
+                }} />
+              </Box>
               <Button
                 type="submit"
                 fullWidth
