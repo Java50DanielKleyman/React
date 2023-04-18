@@ -106,7 +106,7 @@ export default function SignIn(props: Props) {
               >
                 Sign In
               </Button>
-              {code === "Wrong Credentials" && <Alert onClose={() => { dispatch(codeActions.set("OK")) }}
+              {code != "OK" && <Alert onClose={() => { dispatch(codeActions.reset()) }}
                 style={{ backgroundColor: 'LavenderBlush' }}
                 icon={<FaExclamationCircle color="red" />}>
                 Error: Wrong credentials, sign in again
@@ -131,7 +131,7 @@ export default function SignIn(props: Props) {
                 }} />
               </Box>
               <Button
-                type="submit"
+                // type="submit"
                 fullWidth
                 variant="contained"
                 sx={{
