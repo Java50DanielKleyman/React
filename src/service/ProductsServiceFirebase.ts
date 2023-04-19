@@ -29,8 +29,11 @@ export class ProductsServiceFirebase implements ProductsService {
     }
     async setProducts(): Promise<number> {
         const collectionData = (await getCountFromServer(this.productsCollection)).data();
+        const categoriesData = (await getCountFromServer(this.categoriesCollection)).data();
+        let categoriesCount: number = categoriesData.count;
         let count: number = collectionData.count;
         console.log(`Collection ${PRODUCTS_COLLECTION} contains ${count} products`)
+        console.log(`Collection ${CATEGORIES_COLLECTION} contains ${categoriesCount} categories`)
         if (count == 0) {
             const products: ProductType[] = productsConfig.map(pc => {
                 const category = pc.name.split("-")[0];
