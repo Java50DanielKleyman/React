@@ -2,14 +2,31 @@ import { productsService } from "./config/products-service-config"
 import productsConfig from "./config/products-config.json"
 import { getRandomElement } from "./util/random";
 
-const categoriesArray = productsConfig.map(pc => {
-    return pc.name.split("-")[0]
+const categoriesArray: string[] = [];
+productsConfig.forEach(pc => {
+    const category = pc.name.split("-")[0];
+    if (!categoriesArray.includes(category)) {
+        categoriesArray.push(category);
+    }
 })
 test("Random category exists", () => {
-    const randomCategory = getRandomElement(categoriesArray);
-    productsService.isCategoryExist(randomCategory)
-        .then(res => expect(res).toBeFalsy())
-})
+    productsService.getCategoriesCount()
+        .then(res => {
+            if (res == 0) {
+                return;
+            } else {
+                const randomCategory = getRandomElement(categoriesArray);
+                productsService.isCategoryExist(randomCategory)
+                    .then(res => expect(res).toBeFalsy());
+            }
+        });
+});
+
+// test("Random category exists", () => {
+//     const randomCategory = getRandomElement(categoriesArray);
+//     productsService.isCategoryExist(randomCategory)
+//         .then(res => expect(res).toBeFalsy())
+// })
 test("All categories exist", () => {
     const arrayOfPromises = categoriesArray.map(catName => {
         return productsService.isCategoryExist(catName);

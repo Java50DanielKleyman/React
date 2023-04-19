@@ -8,4 +8,5 @@ export default interface ProductsService {
     removeCategory(category: string): Promise<void>;
     isCategoryExist(category: string): Promise<boolean>;
     setProducts(): Promise<number>;
+    getCategoriesCount(): Promise<number>;
 }

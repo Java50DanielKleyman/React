@@ -27,13 +27,16 @@ export class ProductsServiceFirebase implements ProductsService {
     async isCategoryExist(category: string): Promise<boolean> {
         return (await getDoc(doc(this.categoriesCollection, category))).exists();
     }
-    async setProducts(): Promise<number> {
-        const collectionData = (await getCountFromServer(this.productsCollection)).data();
+    async getCategoriesCount(): Promise<number> {
         const categoriesData = (await getCountFromServer(this.categoriesCollection)).data();
         let categoriesCount: number = categoriesData.count;
+        // console.log(`Collection ${CATEGORIES_COLLECTION} contains ${categoriesCount} categories`)
+        return categoriesCount;
+    }
+    async setProducts(): Promise<number> {
+        const collectionData = (await getCountFromServer(this.productsCollection)).data();
         let count: number = collectionData.count;
-        console.log(`Collection ${PRODUCTS_COLLECTION} contains ${count} products`)
-        console.log(`Collection ${CATEGORIES_COLLECTION} contains ${categoriesCount} categories`)
+        console.log(`Collection ${PRODUCTS_COLLECTION} contains ${count} products`);
         if (count == 0) {
             const products: ProductType[] = productsConfig.map(pc => {
                 const category = pc.name.split("-")[0];
@@ -48,10 +51,13 @@ export class ProductsServiceFirebase implements ProductsService {
                     this.addCategory({ name: products[i].category })
                 }
                 await this.addProduct(products[i])
-                count ++;
+                count++;
             }
             console.log(`created ${count} products`)
         }
+        const categoriesData = (await getCountFromServer(this.categoriesCollection)).data();
+        let categoriesCount: number = categoriesData.count;
+        console.log(`Collection ${CATEGORIES_COLLECTION} contains ${categoriesCount} categories`)
         return count;
     }
 
