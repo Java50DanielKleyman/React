@@ -1,6 +1,5 @@
 import { productsService } from "./config/products-service-config"
 import productsConfig from "./config/products-config.json"
-import { getCountFromServer } from "firebase/firestore";
 import { getRandomElement } from "./util/random";
 
 const categoriesArray = productsConfig.map(pc => {
@@ -29,15 +28,3 @@ test("add category", () => {
         .then(res => expect(res).toBeFalsy())
 })
 
-
-// test("setProducts test", () => {
-//     productsService.setProducts().then(count => {
-//         expect(count).toEqual(productsConfig.length);
-//     })
-// })
-// test ("category bread exists", () => {
-//     productsService.isCategoryExist("bread").then(res => expect(res).toBeTruthy())
-// })
-// test ("category kukureku doesnt exists", () => {
-//     productsService.isCategoryExist("bread").then(res => expect(res).toBeFalsy());
-// }) 
