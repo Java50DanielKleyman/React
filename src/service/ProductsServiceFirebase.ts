@@ -25,7 +25,9 @@ export class ProductsServiceFirebase implements ProductsService {
         await deleteDoc(doc(this.categoriesCollection, category));
     }
     async isCategoryExist(category: string): Promise<boolean> {
-        return (await getDoc(doc(this.categoriesCollection, category))).exists();
+        // return (await getDoc(doc(this.categoriesCollection, category))).exists();
+        const docSnapshot = await getDoc(doc(this.categoriesCollection, category));
+    return docSnapshot.exists();
     }
     async getCategoriesCount(): Promise<number> {
         const categoriesData = (await getCountFromServer(this.categoriesCollection)).data();

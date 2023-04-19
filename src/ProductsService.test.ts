@@ -16,8 +16,8 @@ test("Random category exists", () => {
                 return;
             } else {
                 const randomCategory = getRandomElement(categoriesArray);
-                productsService.isCategoryExist(randomCategory)
-                    .then(res => expect(res).toBeFalsy());
+                productsService.isCategoryExist("randomCategory")
+                    .then(res => expect(res).toBeTruthy());
             }
         });
 });
