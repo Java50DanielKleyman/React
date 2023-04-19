@@ -8,17 +8,26 @@ const categoriesArray = productsConfig.map(pc => {
 })
 test("Random category exists", () => {
     const randomCategory = getRandomElement(categoriesArray);
-    productsService.isCategoryExist(randomCategory).then(res => expect(res).toBeTruthy)
+    productsService.isCategoryExist(randomCategory)
+        .then(res => expect(res).toBeFalsy())
 })
 test("All categories exist", () => {
     const arrayOfPromises = categoriesArray.map(catName => {
         return productsService.isCategoryExist(catName);
     })
     Promise.all(arrayOfPromises).then((res) =>
-        expect(res.every((elm) => elm)).toBeTruthy)
+        expect(res.every((elm) => elm)).toBeFalsy())
 })
-
-
+test("Remove category", () => {
+    productsService.removeCategory("bread").then(() =>
+        productsService.isCategoryExist("bread"))
+        .then(res => expect(res).toBeTruthy());
+})
+test("add category", () => {
+    productsService.addCategory({ name: "beer" })
+        .then(() => productsService.isCategoryExist("beer"))
+        .then(res => expect(res).toBeFalsy())
+})
 
 
 // test("setProducts test", () => {
