@@ -3,14 +3,20 @@ import productsConfig from "./config/products-config.json"
 import { getCountFromServer } from "firebase/firestore";
 import { getRandomElement } from "./util/random";
 
-test("Random category exists", () => {
-    const categoriesArray = productsConfig.map(pc => {
-        return pc.name.split("-")[0]
-    })
-    const randomCategoryName = getRandomElement(categoriesArray);
-    productsService.isCategoryExist(randomCategoryName).then(res => expect(res).toBeTruthy)
+const categoriesArray = productsConfig.map(pc => {
+    return pc.name.split("-")[0]
 })
-
+test("Random category exists", () => {
+    const randomCategory = getRandomElement(categoriesArray);
+    productsService.isCategoryExist(randomCategory).then(res => expect(res).toBeTruthy)
+})
+test("All categories exist", () => {
+    const arrayOfPromises = categoriesArray.map(catName => {
+        return productsService.isCategoryExist(catName);
+    })
+    Promise.all(arrayOfPromises).then((res) =>
+        expect(res.every((elm) => elm)).toBeTruthy)
+})
 
 
 
