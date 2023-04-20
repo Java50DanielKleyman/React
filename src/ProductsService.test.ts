@@ -9,6 +9,10 @@ productsConfig.forEach(pc => {
         categoriesArray.push(category);
     }
 })
+test ("category bread exists", () => {
+    productsService.isCategoryExist("sdsdssds")
+    .then(res => expect(res).toBeTruthy());
+})
 test("Random category exists", () => {
     productsService.getCategoriesCount()
         .then(res => {

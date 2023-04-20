@@ -3,9 +3,12 @@ import { ProductType } from "../model/ProductType";
 import ProductsService from "./ProductsService";
 import productsConfig from "../config/products-config.json"
 import { FirebaseApp } from "firebase/app";
-import { getFirestore, collection, getDoc, deleteDoc, setDoc, getCountFromServer, doc } from "firebase/firestore";
+import { getFirestore, collection, getDoc, deleteDoc, setDoc, getCountFromServer, doc, getDocs, query, where } from "firebase/firestore";
 import { firebaseApp } from "../config/firebase-config";
 import { getRandomNumber } from "../util/random";
+import firebase from "firebase/app";
+import "firebase/firestore";
+
 export const PRODUCTS_COLLECTION = "products";
 export const CATEGORIES_COLLECTION = "categories";
 export class ProductsServiceFirebase implements ProductsService {
@@ -25,10 +28,10 @@ export class ProductsServiceFirebase implements ProductsService {
         await deleteDoc(doc(this.categoriesCollection, category));
     }
     async isCategoryExist(category: string): Promise<boolean> {
-        // return (await getDoc(doc(this.categoriesCollection, category))).exists();
-        const docSnapshot = await getDoc(doc(this.categoriesCollection, category));
-    return docSnapshot.exists();
+        return (await getDoc(doc(this.categoriesCollection, category))).exists();
+      
     }
+
     async getCategoriesCount(): Promise<number> {
         const categoriesData = (await getCountFromServer(this.categoriesCollection)).data();
         let categoriesCount: number = categoriesData.count;
