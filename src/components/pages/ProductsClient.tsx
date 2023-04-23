@@ -11,32 +11,32 @@ export const ProductsClient: React.FC = () => {
 
     return <Box sx={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
         <Grid container spacing={2} sx={{ marginTop: "20px", marginLeft: "5vw", marginRight: "5vw" }}>
-  {products.map((product) => (
-    <Grid item xs={3} sm={3} md={3} lg={3} key={product.id}>
-      <Card sx={{ height: "100%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <Avatar
-          src={`images/${product.image}`}
-          sx={{ width: "80%", height: "24vh", alignSelf: "center" }}
-        />
-        <CardContent sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-          <Typography variant="h6" sx={{ marginTop: "10px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-            {product.title}
-          </Typography>
-          <Typography variant="subtitle1" sx={{ color: "gray" }}>
-            {product.unit}
-          </Typography>
-          <Typography variant="body1" sx={{ marginTop: "10px" }}>
-            {product.cost} ₪
-          </Typography>
-          <CardActions sx={{ justifyContent: 'center' }}>
-            <Button variant="outlined">-</Button>
-            <Typography sx={{ mx: 2 }}>0</Typography>
-            <Button variant="outlined">+</Button>
-          </CardActions>
-        </CardContent>
-      </Card>
-    </Grid>
-  ))}
-</Grid>
+            {products.map((product) => (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
+                    <Card sx={{ height: "100%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                        <Avatar
+                            src={`images/${product.image}`}
+                            sx={{ width: "80%", height: "24vh", alignSelf: "center" }}
+                        />
+                        <CardContent sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+                            <Typography variant="h6" sx={{ marginTop: "10px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>
+                                {product.title}
+                            </Typography>
+                            <Typography variant="subtitle1" sx={{ color: "gray" }}>
+                                {product.unit}
+                            </Typography>
+                            <Typography variant="body1" sx={{ marginTop: "10px" }}>
+                                {product.cost} ₪
+                            </Typography>
+                            <CardActions sx={{ justifyContent: 'center' }}>
+                                <Button variant="outlined">-</Button>
+                                <Typography sx={{ mx: 2 }}>0</Typography>
+                                <Button variant="outlined">+</Button>
+                            </CardActions>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            ))}
+        </Grid>
     </Box>
-}
+} 
