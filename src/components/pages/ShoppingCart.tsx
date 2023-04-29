@@ -1,12 +1,14 @@
 import { Avatar, Box, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ProductType } from "../../model/ProductType";
 import { ShoppingProductDataType } from "../../model/ShoppingProductDataType";
 import { ShoppingProductType } from "../../model/ShoppingProductType";
+import { ordersService } from "../../config/orders-service-config";
 
 export const ShoppingCart: React.FC = () => {
+    const authUser = useSelector<any, string>(state => state.auth.authUser);
     const products: ProductType[] =
         useSelector<any, ProductType[]>(state => state.productsState.products);
     const shopping: ShoppingProductType[] =
@@ -21,6 +23,10 @@ export const ShoppingCart: React.FC = () => {
                     count: item.count,
                     totalCost: Math.round((product.cost * item.count) * 100) / 100,
                 };
+            } else {
+                ordersService.removeShoppingProduct(authUser, item.id);
+                return null;
+
             }
             return null;
         });
@@ -55,7 +61,7 @@ export const ShoppingCart: React.FC = () => {
         { field: "count", headerName: "Count", flex: 0.3 },
         { field: "totalCost", headerName: "Total Cost (ILS)", flex: 0.4 },
     ];
-    const totalCost = tableData.reduce((acc, item) => acc + item.totalCost, 0);
+    const totalCost = Math.round((tableData.reduce((acc, item) => acc + item.totalCost, 0)) * 100) / 100;
     return (
         <Box sx={{ width: "100vw", display: "flex", justifyContent: "center" }}>
             <Box sx={{ width: "80vw", height: "80vh" }}>
