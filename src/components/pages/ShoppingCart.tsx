@@ -1,4 +1,4 @@
-import { Avatar, Box } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
@@ -19,7 +19,7 @@ export const ShoppingCart: React.FC = () => {
                 return {
                     ...product,
                     count: item.count,
-                    totalCost: product.cost * item.count,
+                    totalCost: Math.round((product.cost * item.count) * 100) / 100,
                 };
             }
             return null;
@@ -55,7 +55,7 @@ export const ShoppingCart: React.FC = () => {
         { field: "count", headerName: "Count", flex: 0.3 },
         { field: "totalCost", headerName: "Total Cost (ILS)", flex: 0.4 },
     ];
-
+    const totalCost = tableData.reduce((acc, item) => acc + item.totalCost, 0);
     return (
         <Box sx={{ width: "100vw", display: "flex", justifyContent: "center" }}>
             <Box sx={{ width: "80vw", height: "80vh" }}>
@@ -64,6 +64,9 @@ export const ShoppingCart: React.FC = () => {
                     rows={getTableData()}
                     getRowHeight={() => 'auto'}
                 />
+                <Typography sx={{ textAlign: "right", marginTop: 2 }}>
+                    Total Cost: {totalCost} ILS
+                </Typography>
             </Box>
         </Box>
     );
