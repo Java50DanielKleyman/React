@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
-const initialState: { code: string } = {
-    code: 'OK'
+import {createSlice} from '@reduxjs/toolkit';
+const initialState: {code: string} = {
+    code: "OK"
 }
 const codeSlice = createSlice({
     initialState,
@@ -10,9 +10,9 @@ const codeSlice = createSlice({
             state.code = data.payload;
         },
         reset: (state) => {
-            state.code = initialState.code
+            state.code = initialState.code;
         }
     }
 })
 export const codeActions = codeSlice.actions;
-export const codeReducer = codeSlice.reducer
+export const codeReducer = codeSlice.reducer;

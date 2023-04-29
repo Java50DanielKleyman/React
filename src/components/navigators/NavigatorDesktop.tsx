@@ -20,12 +20,13 @@ export const NavigatorDesktop: React.FC<Props> = ({subnav, routes}) => {
     };
   function getTabs(): ReactNode {
     return routes.map((route, index) => <Tab key={index} component={Link}
-     to={route.path} label={route.label}/>    
+     to={route.path} label={route.label}/>
+    
     )
   }
  return <Box sx={{marginTop: "10vh"}}>
     <AppBar sx={{backgroundColor: "lightgray"}}>
-        <Tabs value={value > routes.length? 0 : value} onChange={handleChange}>
+        <Tabs value={value > routes.length ? 0 : value} onChange={handleChange}>
             {getTabs()}
         </Tabs>
     </AppBar>

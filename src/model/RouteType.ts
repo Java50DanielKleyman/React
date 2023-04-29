@@ -1,8 +1,9 @@
 export type RouteType = {
     path: string,
     label: string,
-    authenticated?: boolean,
     always?: boolean,
+    no_authenticated?: boolean,
+    authenticated?: boolean,
     admin?: boolean,
-    no_authenticated?: boolean
+    client?: boolean
 }

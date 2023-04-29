@@ -3,8 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -13,47 +12,41 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LoginData } from '../../model/LoginData';
-import { Alert } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
+import Alert from '@mui/material/Alert';
+import Divider from '@mui/material/Divider';
+import { useDispatch, useSelector } from 'react-redux';
 import { codeActions } from '../../redux/codeSlice';
-import { FaExclamationCircle } from 'react-icons/fa';
-
-type Props = {
-  submitFn:
-  (loginData: LoginData,
-    isGoogleSignIn?: boolean) => void
-}
 
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://www.tel-ran.com/">
+       Tel-Ran
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
 }
-
+ 
 const theme = createTheme();
-
-export default function SignIn(props: Props) {
+type Props = {
+    submitFn: (loginData: LoginData)=> void,
+    
+}
+export const LoginForm: React.FC<Props> = ({submitFn}) => {
+const dispatch = useDispatch();
+const code = useSelector<any,string>(state => state.codeState.code)
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const email = data.get('email') as string;
-    const password = data.get('password') as string;
-    props.submitFn({ email, password });
+    submitFn({
+      email: data.get('email') as string,
+      password: data.get('password') as string,
+    });
   };
-  const handleGoogleClick = () => {
-    const email = '';
-    const password = '';
-    props.submitFn({ email, password }, true);
-  };
-  const code = useSelector<any, string>(state => state.codeState.code);
-  const dispatch = useDispatch();
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -93,82 +86,34 @@ export default function SignIn(props: Props) {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Box display="flex" flexDirection="column" alignItems="center" sx={{ mt: 3 }}>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mb: 2 }}
-              >
-                Sign In
-              </Button>
-              {code != "OK" && <Alert onClose={() => { dispatch(codeActions.reset()) }}
-                style={{ backgroundColor: 'LavenderBlush' }}
-                icon={<FaExclamationCircle color="red" />}>
-                Error: Wrong credentials, sign in again
-              </Alert>}
-              <Box sx={{
-                display: 'flex',
-                alignItems: 'center',
-                textAlign: 'center',
-                width: '100%',
-                marginTop: '1rem',
-                marginBottom: '1rem',
-                lineHeight: 0,
-              }}>
-                <Box sx={{
-                  flex: '1 1 0',
-                  borderBottom: '1px solid gray'
-                }} />
-                <Box sx={{ paddingX: '0.5rem', fontSize: '1rem', fontWeight: 'bold' }}>or</Box>
-                <Box sx={{
-                  flex: '1 1 0',
-                  borderBottom: '1px solid gray'
-                }} />
-              </Box>
-              <Button
-                // type="submit"
-                fullWidth
-                variant="contained"
-                sx={{
-                  mt: 2,
-                  bgcolor: 'white',
-                  height: '48px',
-                  '&:hover': {
-                    bgcolor: 'white',
-                  },
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-                onClick={handleGoogleClick}
-              >
-                <img
-                  src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png"
-                  alt="Google Icon"
-                  style={{ height: '80%', margin: '0 auto' }}
-                />
-              </Button>
-            </Box>
+           
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+             
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+              {code !== 'OK' && <Alert severity='error' onClose={() => dispatch(codeActions.reset())}>Error: {code}, sign in again</Alert>}
               </Grid>
             </Grid>
           </Box>
-        </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+          <Divider sx={{ width: "100%", fontWeight: "bold"}}>or</Divider>
+          <Button 
+           onClick={() =>
+            submitFn({ email: 'GOOGLE', password: '' })} fullWidth variant="outlined" 
+            sx={{mt: 2}}
+             >
+
+            <Avatar src="https://img.icons8.com/color/2x/google-logo.png" sx={{width:{xs: '6vh', sm: '6vw', lg: '3vw'}}}  />
+        </Button>
+          </Box>
+        
+        <Copyright sx={{ mt: 4, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );
