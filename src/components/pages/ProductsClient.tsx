@@ -43,7 +43,7 @@ export const ProductsClient: React.FC = () => {
                         {p.unit}
                     </Typography>
                     <Typography color="text.secondary" sx={{ fontSize: "1.1em" }}>
-                        {p.cost} <img src="images/israeli-shekel-icon.svg" width="5%" />
+                        {p.cost} <img src="images/shekel.png" width="4%" />
                     </Typography>
                 </CardContent>
                 <CardActions>
