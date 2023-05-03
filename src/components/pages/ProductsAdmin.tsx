@@ -36,7 +36,7 @@ export const ProductsAdmin: React.FC = () => {
         if (rowData.cost < 1 || rowData.cost > 1000) {
             throw 'cost must be more than 1 and less than 1000 NIS'
         }
-        await productsService.addProduct(rowData)
+        await productsService.addProduct(rowData, rowData.id)
         return newRow;
     }
     return <Box sx={{ width: "100vw", display: "flex", justifyContent: "center" }}>

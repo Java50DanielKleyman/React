@@ -13,8 +13,11 @@ export const CATEGORIES_COLLECTION = "categories";
 export class ProductsServiceFirebase implements ProductsService {
     productsCollection = collection(getFirestore(firebaseApp), PRODUCTS_COLLECTION);
     categoriesCollection = collection(getFirestore(firebaseApp), CATEGORIES_COLLECTION);
-    async addProduct(product: ProductType): Promise<void> {
-        product.id = getRandomNumber(100000, 999999).toString();
+    async addProduct(product: ProductType, id?: string): Promise<void> {
+        if(id){
+            product.id = id
+        }
+        else product.id = getRandomNumber(100000, 999999).toString();
         await setDoc(doc(this.productsCollection, product.id), product);
     }
     async addCategory(category: CategoryType): Promise<void> {
