@@ -24,52 +24,50 @@ import { ordersService } from './config/orders-service-config';
 import { shoppingActions } from './redux/shoppingSlice';
 
 function App() {
-     const authUser = useSelector<any, string>(state => state.auth.authUser);
-     const [routesState, setRoutes] = useState(getRoutes());
-     const dispatch = useDispatch();
-     function getRoutes(): RouteType[] {
-          const routesRes = routes.filter(routePredicate);
-          const logoutRoute = routes.find(route => route.path === '/logout');
-          if (logoutRoute) {
-               logoutRoute.label = authUser;
-          }
-          return routesRes;
+     const authUser = useSelector<any, string>(state=>state.auth.authUser);
+const [routesState, setRoutes] = useState(getRoutes());
+const dispatch = useDispatch();
+function getRoutes(): RouteType[] {
+     const routesRes = routes.filter(routePredicate);
+     const logoutRoute = routes.find(route => route.path === '/logout');
+     if (logoutRoute) {
+          logoutRoute.label = authUser;
      }
-     function routePredicate(route: RouteType): boolean | undefined {
-          return route.always ||
-               (route.authenticated && !!authUser) ||
-               (route.client && !!authUser && !authUser.includes('admin')) ||
-               (route.admin && authUser.includes('admin')) ||
-               (route.no_authenticated && !authUser)
+     return routesRes;
+}
+function routePredicate(route: RouteType): boolean | undefined {
+     return route.always ||( route.authenticated && !!authUser )
+      || (route.admin && authUser.includes('admin')) ||
+       (route.no_authenticated && !authUser)  || (route.client && authUser != '' && !authUser.includes("admin"))
+}
+useEffect(() => {
+     setRoutes(getRoutes());
+}, [authUser]);
+useEffect (() => {
+     const subscription = productsService.getProducts()
+     .subscribe({
+          next: (products: ProductType[]) => {
+               console.log(products)
+               dispatch(productsActions.setProducts(products))
+          }
+     })
+     return () => subscription.unsubscribe()
+}, []);
+useEffect(() => {
+     let subscription: Subscription;
+     if (authUser != '' && !authUser.includes("admin")) {
+          subscription = ordersService.getShoppingCart(authUser).subscribe ({
+               next: (shopping) => dispatch(shoppingActions.setShopping(shopping))
+          })
+     } else {
+          dispatch(shoppingActions.resetShopping());
      }
-     useEffect(() => {
-          setRoutes(getRoutes());
-     }, [authUser]);
-     useEffect(() => {
-          const subscription = productsService.getProducts()
-               .subscribe({
-                    next: (products: ProductType[]) => {
-                         console.log(products)
-                         dispatch(productsActions.setProducts(products))
-                    }
-               })
-          return () => subscription.unsubscribe()
-     }, []);
-     useEffect(() => {
-          let subscription: Subscription;
-          if (authUser != '' && !authUser.includes("admin")) {
-               subscription = ordersService.getShoppingCart(authUser).subscribe({
-                    next: (shopping) => dispatch(shoppingActions.setShopping(shopping))
-               })
-          } else {
-               dispatch(shoppingActions.resetShopping());
+     return () => {
+          if (subscription) {
+               subscription.unsubscribe();
           }
-          return () => {
-               if (subscription) {
-                    subscription.unsubscribe();
-               }
-          }
-     }, [authUser])
+     }
+}, [authUser])
 
      return <BrowserRouter>
           <Routes>
@@ -78,11 +76,11 @@ function App() {
                     <Route path='customers' element={<Customers />} />
                     <Route path='orders' element={<Orders />} />
                     <Route path='shoppingcart' element={<ShoppingCart />} />
-                    <Route path='products' element={<Products />} />
-                    <Route path='login' element={<Login></Login>} />
-                    <Route path='logout' element={<Logout></Logout>} />
-                    <Route path='/*' element={<NotFound />} />
-
+                    <Route path='products' element={<Products/>} />
+                    <Route path='login' element={<Login></Login>}/>
+                    <Route path='logout' element={<Logout></Logout>}/>
+                    <Route path='/*' element={<NotFound/>}/>
+              
                </Route>
           </Routes>
      </BrowserRouter>
