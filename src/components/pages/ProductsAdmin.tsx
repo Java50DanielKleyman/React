@@ -31,13 +31,14 @@ export const ProductsAdmin: React.FC = () => {
             ]
         }
     ]
-    async function updateCount(newRow: any): Promise<any> {
-        const rowData: ProductType = newRow;
-        if (rowData.cost < 1 || rowData.cost > 1000) {
-            throw 'cost must be more than 1 and less than 1000 NIS'
+    async function updateCount(newRow: any, oldRow: any): Promise<any> {
+        const newRowData: ProductType = newRow;
+        const oldRowData: ProductType = oldRow;
+        if (newRowData.cost > oldRowData.cost * 1.5) {
+            throw 'cost must not be greater than 50% from the existing cost'
         }
-        await productsService.addProduct(rowData, rowData.id)
-        return newRow;
+        await productsService.addProduct(newRowData, newRowData.id)
+        return newRowData;
     }
     return <Box sx={{ width: "100vw", display: "flex", justifyContent: "center" }}>
         <Box sx={{ width: "80vw", height: "80vh" }}>
